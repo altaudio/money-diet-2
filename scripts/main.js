@@ -1,6 +1,7 @@
 import http from 'http'
 import Bot from 'messenger-bot'
 import config from './config/defaults.js'
+import blastUsers from './blastUsers'
 
 const bot = new Bot({
   token: config.token,
@@ -24,18 +25,10 @@ bot.on('message', (payload, reply) => {
     })
   })
 
-  bot.sendMessage(
-    payload.sender.id,
-    {
-      text: "Now I've got your ID I think I can spam you without you sending me a message!"
-    },
+}
+)
 
-    (error, info) => {
-      console.log(error)
-      console.log(info)
-    }
-  )
-})
+blastUsers("Have a kitten.");
 
 http.createServer(bot.middleware()).listen(3000)
 console.log('Echo bot server running at port 3000.')
